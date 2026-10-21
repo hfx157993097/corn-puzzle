@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+
+# Editors and operating systems
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs and local environment
+*.log
+.env
+.env.*
+
+# User-created puzzle sets stay local. Keep the bundled example.
+data/sets/*.json
+!data/sets/default-corn-7x14.json

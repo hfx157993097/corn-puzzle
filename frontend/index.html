@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>玉米拼图编辑器</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <h1>玉米拼图</h1>
+      </div>
+      <div class="top-controls">
+        <label class="field">
+          <span>组</span>
+          <select id="setSelect"></select>
+        </label>
+        <button type="button" id="btnNewSet" class="btn">新建</button>
+        <button type="button" id="btnRenameSet" class="btn">重命名</button>
+        <button type="button" id="btnDeleteSet" class="btn btn-danger">删除</button>
+        <button type="button" id="btnSaveSet" class="btn">保存组</button>
+        <button type="button" id="btnExport" class="btn btn-ghost">导出 JSON</button>
+        <label class="btn btn-ghost file-btn">
+          导入 JSON
+          <input type="file" id="importFile" accept="application/json,.json" hidden />
+        </label>
+        <button type="button" id="btnSolve" class="btn btn-primary">提交求解</button>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <section class="panel panel-canvas" aria-labelledby="canvasTitle">
+        <h2 id="canvasTitle">零件画布</h2>
+        <p class="hint">点击格子点亮/熄灭，保存为零件（保存后画布会清空）。</p>
+        <div class="canvas-toolbar">
+          <label>行 <input type="number" id="editorRows" min="1" max="32" value="5" /></label>
+          <label>列 <input type="number" id="editorCols" min="1" max="32" value="5" /></label>
+          <button type="button" id="btnResizeEditor" class="btn">改尺寸</button>
+          <button type="button" id="btnClearCanvas" class="btn">清空</button>
+        </div>
+        <div id="canvasGrid" class="grid-canvas" role="grid"></div>
+        <div class="canvas-actions">
+          <button type="button" id="btnAddPiece" class="btn btn-primary">保存新零件</button>
+          <button type="button" id="btnOverwritePiece" class="btn">覆盖选中</button>
+        </div>
+      </section>
+
+      <section class="panel panel-pieces" aria-labelledby="piecesTitle">
+        <h2 id="piecesTitle">零件列表</h2>
+        <p class="hint">选中后可编辑、删除或调整顺序。</p>
+        <ul id="pieceList" class="piece-list"></ul>
+        <div class="piece-actions">
+          <button type="button" id="btnDeletePiece" class="btn btn-danger">删除</button>
+          <button type="button" id="btnMoveUp" class="btn">上移</button>
+          <button type="button" id="btnMoveDown" class="btn">下移</button>
+        </div>
+      </section>
+
+      <section class="panel panel-board" aria-labelledby="boardTitle">
+        <h2 id="boardTitle">棋盘与结果</h2>
+        <div class="board-params">
+          <label>行 <input type="number" id="boardRows" min="1" max="64" value="7" /></label>
+          <label>列 <input type="number" id="boardCols" min="1" max="64" value="14" /></label>
+          <label class="check">
+            <input type="checkbox" id="wrapCols" checked />
+            左右闭环（圆柱）
+          </label>
+          <label class="check" title="勾选时只能按画布方向正放，或旋转 180° 倒置。取消后才允许横放。">
+            <input type="checkbox" id="uprightOnly" checked />
+            只能正放或倒置
+          </label>
+          <label class="check" title="勾选后允许左右翻转。默认不允许。">
+            <input type="checkbox" id="allowMirror" />
+            允许镜像
+          </label>
+        </div>
+        <p id="kernelCheck" class="kernel-check">核仁合计 —</p>
+        <div id="statusBox" class="status-box" aria-live="polite"></div>
+        <div id="resultBoards" class="result-boards"></div>
+        <ul id="diagnostics" class="diagnostics"></ul>
+      </section>
+    </main>
+  </div>
+  <script src="/app.js"></script>
+</body>
+</html>
